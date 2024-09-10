@@ -59,7 +59,7 @@ class AppFixtures extends Fixture
             $emailUsername = $this->slug->slug($username); // USERNAME SLUGGYFIÉ
             $user = new User();
             $user
-                ->setEmail($emailUsername . $faker->freeEmailDomain()) // freeEmailDomain() créer un nom de domain de mail e.g "@gmail.com"
+                ->setEmail($emailUsername . '@' . $faker->freeEmailDomain()) // freeEmailDomain() créer un nom de domain de mail e.g "gmail.com"
                 ->setUsername($username)
                 ->setPassword($this->hash->hashPassword($user, 'admin')) // HASH le mdp "admin"
                 ->setRoles(['ROLE_USER']);

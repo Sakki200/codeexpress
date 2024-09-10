@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Note
+{% endblock %}
+
+{% block body %}
+
+	<h1>Title:
+		{{ note.title }}</h1>
+	<p>Content:
+		{{ note.content }}</p>
+	<p>Created at:
+		{{ note.createdAt|date('Y-m-d H:i:s') }}</p>
+	<p>Updated at:
+		{{ note.updatedAt|date('Y-m-d H:i:s') }}</p>
+
+{% endblock %}
