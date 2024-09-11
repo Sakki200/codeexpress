@@ -4,10 +4,16 @@
 {% endblock %}
 
 {% block body %}
+	<h1>All public notes</h1>
 
-	{{ dump(notes) }}
-	{% for item in notes %}
-		<h1>{{ item.author.username }}</h1>
+	{% for note in allNotes %}
+
+		{% if note.title|lenght > 50 %}
+			{{dump(note.title|slice(0,50))}}...
+		{% endif %}
+		
+		{{dump(note)}}
+		<a href="{{path('app_show', {'slug': note.slug})}}">Show</a>
 	{% endfor %}
 
 {% endblock %}

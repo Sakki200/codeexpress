@@ -2,17 +2,21 @@
 
 namespace App\Controller;
 
+use App\Repository\NoteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(): Response
+    #[Route('/', name: 'app_home', methods: ['GET'])]
+    public function index(NoteRepository $nr): Response
     {
+        //Si public oui, Trie par date de création, Limite 6
+        $lastNotes = $nr->findBy(['is_public' => true], ['created_at' => 'DESC'], 6);
+
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'Ceci est un nom !',
+            'lastNotes' => $lastNotes
         ]);
     }
 }

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page de Profile
+{% block title %}User profile
 {% endblock %}
 
 {% block body %}
-
-
+	<h1>{{app.user.username}}</h1>
+	{{dump(app.user.username)}}
 
 {% endblock %}

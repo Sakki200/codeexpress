@@ -13,5 +13,8 @@
 		{{ note.createdAt|date('Y-m-d H:i:s') }}</p>
 	<p>Updated at:
 		{{ note.updatedAt|date('Y-m-d H:i:s') }}</p>
+	<a href="{{path('app_note_all')}}">Back to all
+		<strong>Notes</strong>
+	</a>
 
 {% endblock %}
