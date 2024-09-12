@@ -4,9 +4,26 @@
 {% endblock %}
 
 {% block body %}
+	<section class="">
+		<h1 class="text-5xl text-orange-400 text-center font-bold">ACCUEIL</h1>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A vero eius, deleniti necessitatibus eos labore assumenda? Nostrum, sunt excepturi omnis eius explicabo nisi provident unde cupiditate adipisci hic atque aliquam.</p>
+	</section>
+	<section class="">
+		<h3>Lorem</h3>
+		<p>There are
+			{{lastNotes|length }}
+			public notes on CodeXpress</p>
+		<div class="">
+			{% for item in lastNotes %}
+				<h4>{{item.title}}</h4>
+				{% for category in item.category %}
+					<h5>{{category.title}}</h5>
+				{% endfor %}
+				<a href="{{path('app_show', {'slug': item.slug})}}">Check it</a>
+			{% endfor %}
+		</div>
+	</section>
 
-<h1>ACCUEIL</h1>
-
-{{dump(lastNotes)}}
+	{{dump(lastNotes)}}
 
 {% endblock %}

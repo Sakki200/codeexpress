@@ -6,8 +6,11 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Category;
+use App\Entity\Like;
+use App\Entity\Network;
 use App\Entity\Note;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -44,6 +47,8 @@ class AppFixtures extends Fixture
             'Java' => 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original-wordmark.svg',
         ];
         $categoryArray = []; // Ce tableau nous servira pur conserver les objects Category
+        $noteArray = []; // Ce tableau nous servira pur conserver les objects Note
+        $userArray = []; // Ce tableau nous servira pur conserver les objects User
 
         foreach ($categories as $title => $icon) {
             $category = new Category();  // NOUVEL OBJET CATEGORY
@@ -64,6 +69,7 @@ class AppFixtures extends Fixture
                 ->setPassword($this->hash->hashPassword($user, 'admin')) // HASH le mdp "admin"
                 ->setRoles(['ROLE_USER']);
 
+            array_push($userArray, $user);
             $manager->persist($user);
 
             for ($j = 0; $j < 10; $j++) {
@@ -76,10 +82,30 @@ class AppFixtures extends Fixture
                     ->setPublic($faker->boolean(50))
                     ->setViews($faker->numberBetween(100, 10000))
                     ->setAuthor($user)
-                    ->addCategory($faker->randomElement($categoryArray));
+                    ->setCategory($faker->randomElement($categoryArray));
+
+                array_push($noteArray, $note);
                 $manager->persist($note);
             }
+
+            for ($k = 0; $k < 2; $k++) {
+                $network = new Network();
+                $network
+                    ->setName($faker->company())
+                    ->setUrl($faker->url());
+
+                $manager->persist($network);
+            }
+            for ($l = 0; $l < 50; $l++) {
+                $like = new Like();
+                $like
+                    ->setAuthor($faker->randomElement($userArray))
+                    ->setNote($faker->randomElement($noteArray));
+
+                $manager->persist($like);
+            }
         }
+
         $manager->flush($category);
     }
 }

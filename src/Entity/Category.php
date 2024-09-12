@@ -24,14 +24,14 @@ class Category
     /**
      * @var Collection<int, Note>
      */
-    #[ORM\ManyToMany(targetEntity: Note::class, mappedBy: 'category')]
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'category')]
     private Collection $notes;
 
     public function __construct()
     {
-        $this->icon = "icon-default.png";
         $this->notes = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -74,7 +74,7 @@ class Category
     {
         if (!$this->notes->contains($note)) {
             $this->notes->add($note);
-            $note->addCategory($this);
+            $note->setCategory($this);
         }
 
         return $this;
@@ -83,7 +83,10 @@ class Category
     public function removeNote(Note $note): static
     {
         if ($this->notes->removeElement($note)) {
-            $note->removeCategory($this);
+            // set the owning side to null (unless already changed)
+            if ($note->getCategory() === $this) {
+                $note->setCategory(null);
+            }
         }
 
         return $this;

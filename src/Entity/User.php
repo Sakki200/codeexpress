@@ -50,9 +50,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'author')]
+    private Collection $likes;
+
+    /**
+     * @var Collection<int, Network>
+     */
+    #[ORM\OneToMany(targetEntity: Network::class, mappedBy: 'author')]
+    private Collection $networks;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->networks = new ArrayCollection();
     }
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
@@ -203,6 +217,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getAuthor() === $this) {
+                $like->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Network>
+     */
+    public function getNetworks(): Collection
+    {
+        return $this->networks;
+    }
+
+    public function addNetwork(Network $network): static
+    {
+        if (!$this->networks->contains($network)) {
+            $this->networks->add($network);
+            $network->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNetwork(Network $network): static
+    {
+        if ($this->networks->removeElement($network)) {
+            // set the owning side to null (unless already changed)
+            if ($network->getAuthor() === $this) {
+                $network->setAuthor(null);
+            }
+        }
 
         return $this;
     }

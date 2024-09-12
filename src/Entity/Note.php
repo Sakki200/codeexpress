@@ -44,22 +44,26 @@ class Note
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'note', orphanRemoval: true)]
     private Collection $notifications;
 
-    /**
-     * @var Collection<int, Category>
-     */
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'notes')]
-    private Collection $category;
 
     #[ORM\ManyToOne(inversedBy: 'notes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
+
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'note')]
+    private Collection $likes;
+
+    #[ORM\ManyToOne(inversedBy: 'notes')]
+    private ?Category $category = null;
 
     public function __construct()
     {
         $this->title = uniqid('note-'); //GUID of title initialization
         $this->is_public = false; //boolean initialization 
         $this->notifications = new ArrayCollection();
-        $this->category = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -194,29 +198,6 @@ class Note
         return $this;
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategory(): Collection
-    {
-        return $this->category;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->category->contains($category)) {
-            $this->category->add($category);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        $this->category->removeElement($category);
-
-        return $this;
-    }
 
     public function getAuthor(): ?User
     {
@@ -226,6 +207,48 @@ class Note
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setNote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getNote() === $this) {
+                $like->setNote(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

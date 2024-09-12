@@ -1,0 +1,21 @@
+<nav class="flex justify-between items-center bg-neutral-100 p-2">
+	<img src="https://avatar.iran.liara.run/public/26" alt="logo" width="32" class="">
+	<div class="flex justify-between items-center gap-4">
+		<form action="" method="post">
+			<input type="hidden" name="{{ csrf_token('authenticate') }}">
+			<input type="text" name="" id="" placeholder="Looking for a specific note?" class="">
+			<button type="submit">{{ux_icon('mdi:search',{'class':'h-6 w-6'})}}</button>
+		</form>
+		<div class="flex justify-between items-center gap-4">
+			<a href="{{path('app_note_new')}}" class="border-2  border-neutral-700 p-1 rounded-md">
+				{{ux_icon('mdi:plus-box-outline',{'class':'h-6 w-6'})}}
+			</a>
+			<a href="{{path('app_profile')}}" class="border-2  border-neutral-700 p-1 rounded-md">
+				{{ux_icon('mdi:cog-outline',{'class':'h-6 w-6'})}}
+			</a>
+			<a href="{{path('app_profile',{'username':app.user.username ?? ''})}}" class="p-2 rounded-full">
+				<img src="https://avatar.iran.liara.run/public/13" alt="profile picture" width="32">
+			</a>
+		</div>
+	</div>
+</nav>

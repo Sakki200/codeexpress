@@ -16,6 +16,8 @@
 		{% endblock %}
 	</head>
 	<body>
+		{{ include('./components/navbar.html.twig') }}
 		{% block body %}{% endblock %}
+		{{ include('./components/footer.html.twig') }}
 	</body>
 </html>
