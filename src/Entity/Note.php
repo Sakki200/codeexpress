@@ -61,9 +61,11 @@ class Note
     public function __construct()
     {
         $this->title = uniqid('note-'); //GUID of title initialization
+
         $this->is_public = false; //boolean initialization 
         $this->notifications = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->views = 0;
     }
 
     #[ORM\PrePersist]
@@ -104,7 +106,6 @@ class Note
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
-
         return $this;
     }
 

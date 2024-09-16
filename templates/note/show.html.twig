@@ -5,6 +5,12 @@
 
 {% block body %}
 
+	{% for message in app.flashes('success') %}
+		<div class="">
+			{{ message }}
+		</div>
+	{% endfor %}
+
 	<h1>Title:
 		{{ note.title }}</h1>
 	<p>Content:
@@ -16,5 +22,6 @@
 	<a href="{{path('app_note_all')}}">Back to all
 		<strong>Notes</strong>
 	</a>
+
 
 {% endblock %}
