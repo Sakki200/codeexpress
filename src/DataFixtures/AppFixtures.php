@@ -10,7 +10,6 @@ use App\Entity\Like;
 use App\Entity\Network;
 use App\Entity\Note;
 use App\Entity\User;
-use App\Repository\UserRepository;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -45,6 +44,20 @@ class AppFixtures extends Fixture
             'bash' => 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-plain.svg',
             'Markdown' => 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/markdown/markdown-original.svg',
             'Java' => 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original-wordmark.svg',
+        ];
+
+        $networkArray = [
+            'Twitter' => 'https://twitter.com/',
+            'Facebook' => 'https://www.facebook.com/',
+            'Instagram' => 'https://www.instagram.com/',
+            'YouTube' => 'https://www.youtube.com/',
+            'Pinterest' => 'https://www.pinterest.com/',
+            'LinkedIn' => 'https://www.linkedin.com/in/',
+            'Snapchat' => 'https://www.snapchat.com/',
+            'WhatsApp' => 'https://www.whatsapp.com/',
+            'TikTok' => 'https://www.tiktok.com/',
+            'Reddit' => 'https://www.reddit.com/',
+            'Discord' => 'https://discord.com/'
         ];
         $categoryArray = []; // Ce tableau nous servira pur conserver les objects Category
         $noteArray = []; // Ce tableau nous servira pur conserver les objects Note
@@ -90,9 +103,11 @@ class AppFixtures extends Fixture
 
             for ($k = 0; $k < 2; $k++) {
                 $network = new Network();
+                $randomKey = array_rand($networkArray);
+
                 $network
-                    ->setName($faker->company())
-                    ->setUrl($faker->url());
+                    ->setName($randomKey)
+                    ->setUrl($networkArray[$randomKey] . $username);
 
                 $manager->persist($network);
             }

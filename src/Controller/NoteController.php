@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Note;
+use App\Form\NoteType;
 use App\Repository\NoteRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,14 +20,14 @@ class NoteController extends AbstractController
             'allNotes' => $nr->findBy(['is_public' => true], ['created_at' => 'DESC'])
         ]);
     }
-    #[Route('/{slug}', name: 'app_show', methods: ['GET'])]
+    #[Route('/n/{slug}', name: 'app_show', methods: ['GET'])]
     public function show(NoteRepository $nr, string $slug): Response
     {
         return $this->render('note/show.html.twig', [
             'note' => $nr->findOneBySlug($slug)
         ]);
     }
-    #[Route('/{username}', name: 'app_note_user', methods: ['GET'])]
+    #[Route('/u/{username}', name: 'app_note_user', methods: ['GET'])]
     public function userNotes(UserRepository $user, string $username): Response
     {
         $author = $user->findOneByUsername($username); // Recherche de l'utilisateur
@@ -37,7 +39,12 @@ class NoteController extends AbstractController
     #[Route('/new', name: 'app_note_new', methods: ['GET', 'POST'])]
     public function new(): Response
     {
-        return $this->render('note/new.html.twig', []);
+        $note = new Note();
+        $form = $this->createForm(NoteType::class, $note);
+
+        return $this->render('note/new.html.twig', [
+            'noteForm' => $form
+        ]);
     }
     #[Route('/edit/{slug}', name: 'app_note_edit', methods: ['GET', 'POST'])]
     public function edit(NoteRepository $nr, string $slug): Response

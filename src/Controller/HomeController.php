@@ -14,8 +14,10 @@ class HomeController extends AbstractController
     {
         //Si public oui, Trie par date de création, Limite 6
         $lastNotes = $nr->findBy(['is_public' => true], ['created_at' => 'DESC'], 6);
+        $totalNotes = $nr->findBy(['is_public' => true]);
 
         return $this->render('home/index.html.twig', [
+            'totalNotes' => count($totalNotes),
             'lastNotes' => $lastNotes
         ]);
     }

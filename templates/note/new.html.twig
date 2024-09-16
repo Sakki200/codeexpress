@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Toutes les notes
+{% block title %}
+	Toutes les notes
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-webcomponent@2/dist/tinymce-webcomponent.min.js"></script>
 {% endblock %}
 
 {% block body %}
 
-	{{ dump(notes) }}
-	{% for item in notes %}
-		<h1>{{ item.author.username }}</h1>
-	{% endfor %}
-
-{% endblock %}
+	{{form(noteForm)}}{% endblock %}
