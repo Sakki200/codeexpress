@@ -5,6 +5,18 @@
 
 {% block body %}
 	<h1>{{app.user.username}}</h1>
-	{{dump(app.user.username)}}
+	<img src="{{app.user.image}}" alt="{{'Profile image of' ~ app.user.username}}" class="rounded-full w-16 h-16 mb-4">
+
+	<section>
+	{{ dump(userNotes) }}
+		{% for item in userNotes %}
+			<article>
+				<h3>{{item.title}}</h3>
+				<p>{{item.views}}</p>
+				<p>{{item.likes}}</p>
+				<p>{{item.content}}</p>
+			</article>
+		{% endfor %}
+	</section>
 
 {% endblock %}

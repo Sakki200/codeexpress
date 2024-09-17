@@ -47,17 +47,14 @@ class AppFixtures extends Fixture
         ];
 
         $networkArray = [
-            'Twitter' => 'https://twitter.com/',
-            'Facebook' => 'https://www.facebook.com/',
-            'Instagram' => 'https://www.instagram.com/',
-            'YouTube' => 'https://www.youtube.com/',
-            'Pinterest' => 'https://www.pinterest.com/',
-            'LinkedIn' => 'https://www.linkedin.com/in/',
-            'Snapchat' => 'https://www.snapchat.com/',
-            'WhatsApp' => 'https://www.whatsapp.com/',
-            'TikTok' => 'https://www.tiktok.com/',
-            'Reddit' => 'https://www.reddit.com/',
-            'Discord' => 'https://discord.com/'
+            'twitter' => 'https://twitter.com/',
+            'facebook' => 'https://www.facebook.com/',
+            'instagram' => 'https://www.instagram.com/',
+            'youtube' => 'https://www.youtube.com/',
+            'pinterest' => 'https://www.pinterest.com/',
+            'linkedin' => 'https://www.linkedin.com/in/',
+            'snapchat' => 'https://www.snapchat.com/',
+            'reddit' => 'https://www.reddit.com/'
         ];
         $categoryArray = []; // Ce tableau nous servira pur conserver les objects Category
         $noteArray = []; // Ce tableau nous servira pur conserver les objects Note
@@ -80,18 +77,19 @@ class AppFixtures extends Fixture
                 ->setEmail($emailUsername . '@' . $faker->freeEmailDomain()) // freeEmailDomain() créer un nom de domain de mail e.g "gmail.com"
                 ->setUsername($username)
                 ->setPassword($this->hash->hashPassword($user, 'admin')) // HASH le mdp "admin"
-                ->setRoles(['ROLE_USER']);
+                ->setRoles(['ROLE_USER'])
+                ->setImage("https://avatar.iran.liara.run/public/" . $faker->randomNumber(2, true));
 
             array_push($userArray, $user);
             $manager->persist($user);
 
-            for ($j = 0; $j < 10; $j++) {
+            for ($j = 0; $j < 3; $j++) {
 
                 $note = new Note();
                 $note
                     ->setTitle($faker->sentence())
                     ->setSlug($this->slug->slug($note->getTitle()))
-                    ->setContent($faker->paragraphs(4, true))
+                    ->setContent($faker->randomHtml())
                     ->setPublic($faker->boolean(50))
                     ->setViews($faker->numberBetween(100, 10000))
                     ->setAuthor($user)
@@ -101,17 +99,18 @@ class AppFixtures extends Fixture
                 $manager->persist($note);
             }
 
-            for ($k = 0; $k < 2; $k++) {
+            for ($k = 0; $k < 3; $k++) {
                 $network = new Network();
                 $randomKey = array_rand($networkArray);
 
                 $network
                     ->setName($randomKey)
+                    ->setAuthor($user)
                     ->setUrl($networkArray[$randomKey] . $username);
 
                 $manager->persist($network);
             }
-            for ($l = 0; $l < 50; $l++) {
+            for ($l = 0; $l < 500; $l++) {
                 $like = new Like();
                 $like
                     ->setAuthor($faker->randomElement($userArray))

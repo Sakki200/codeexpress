@@ -5,9 +5,4 @@
 
 {% block body %}
 
-	{{ dump(notes) }}
-	{% for item in notes %}
-		<h1>{{ item.author.username }}</h1>
-	{% endfor %}
-
-{% endblock %}
+	{{form(noteForm)}}{% endblock %}

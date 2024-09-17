@@ -5,9 +5,7 @@
 	</a>
 	<div class="flex justify-between items-center gap-4">
 		<form action="" method="post" class="md:flex items-center border-2 border-neutral-400 rounded-md p-1 hidden">
-			<input type="hidden" 
-			{# name="{{csrf_token}}"  #}
-			value="{{ csrf_token('authenticate') }}">
+			<input type="hidden" {# name="{{csrf_token}}" #} value="{{ csrf_token('authenticate') }}">
 			<input type="text" name="" id="" placeholder="Looking for a specific note?" class="bg-transparent outline-none">
 			<button type="submit">{{ux_icon('mdi:search',{'class':'h-6 w-6 text-neutral-600 hover:text-violet-600'})}}</button>
 		</form>
@@ -15,15 +13,25 @@
 			<a href="#" class="border-2  border-neutral-700 p-1 rounded-md hover:bg-neutral-200 md:hidden">
 				{{ux_icon('mdi:search',{'class':'h-6 w-6'})}}
 			</a>
-			<a href="{{path('app_note_new')}}" class="border-2  border-neutral-700 p-1 rounded-md hover:bg-neutral-200">
-				{{ux_icon('mdi:plus-box-outline',{'class':'h-6 w-6'})}}
-			</a>
-			<a href="{{path('app_profile')}}" class="border-2  border-neutral-700 p-1 rounded-md">
-				{{ux_icon('mdi:cog-outline',{'class':'h-6 w-6'})}}
-			</a>
-			<a href="{{path('app_profile',{'username':app.user.username ?? ''})}}" class="p-2 rounded-full">
-				<img src="https://avatar.iran.liara.run/public/13" alt="profile picture" width="32">
-			</a>
+			{% if app.user %}
+				<a href="{{path('app_note_new')}}" class="border-2  border-neutral-700 p-1 rounded-md hover:bg-neutral-200">
+					{{ux_icon('mdi:plus-box-outline',{'class':'h-6 w-6'})}}
+				</a>
+				{# <a href="{{path('app_profile')}}" class="border-2  border-neutral-700 p-1 rounded-md">
+																	{{ux_icon('mdi:cog-outline',{'class':'h-6 w-6'})}}
+																</a> #}
+				<a href="{{path('app_logout')}}" class="border-2  border-neutral-700 p-1 rounded-md">
+					{{ux_icon('mdi:logout',{'class':'h-6 w-6'})}}
+				</a>
+				<a href="{{path('app_profile',{'username':app.user.username ?? ''})}}" class="p-2 rounded-full">
+					<img src="{{app.user.image}}" alt="profile picture" width="32">
+				</a>
+
+			{% else %}
+				<a href="{{path('app_profile',{'username':app.user.username ?? ''})}}" class="border-2  border-neutral-700 p-1 rounded-md">
+					{{ux_icon('mdi:register',{'class':'h-6 w-6'})}}
+				</a>
+			{% endif %}
 		</div>
 	</div>
 </nav>
