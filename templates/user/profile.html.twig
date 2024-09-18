@@ -4,19 +4,39 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{app.user.username}}</h1>
-	<img src="{{app.user.image}}" alt="{{'Profile image of' ~ app.user.username}}" class="rounded-full w-16 h-16 mb-4">
-
-	<section>
-	{{ dump(userNotes) }}
-		{% for item in userNotes %}
-			<article>
-				<h3>{{item.title}}</h3>
-				<p>{{item.views}}</p>
-				<p>{{item.likes}}</p>
-				<p>{{item.content}}</p>
-			</article>
-		{% endfor %}
+	<header class="py-5 md:py-16 bg-gradient-to-r from-violet-100 via-slate-100 to-indigo-100 mb-16">
+		<div class="px-4 sm:max-w-screen-sm md:max-w-screen-lg mx-auto text-center">
+			<h1 class="text-4xl md:text-5xl mb-4 font-bold">Your profile</h1>
+			<img src="{{ '/images/uploads/' ~ app.user.image ?? app.user.image }}" width="150" class="inline-block shadow-md rounded-full">
+		</div>
+	</header>
+	<section class="max-w-screen-lg mx-auto px-4 gap-4">
+		{% if app.user.notes is empty %}
+			<div class="text-center">
+				<p class="text-violet-950 mb-5">
+					You haven't created any note yet
+				</p>
+				<a href="{{ path('app_note_new') }}" class="bg-violet-100 rounded-md py-2 px-3 hover:bg-violet-200 self-end w-fit transition-all duration-200 ease-in-out">
+					Create a new note
+				</a>
+			</div>
+		{% else %}
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+				{% for item in app.user.notes %}
+					<div class="shadow-lg rounded-md p-4 md:p-6 mb-4 flex flex-col border">
+						<h5 class="mb-1">{{ item.title|slice(0,40) }}...</h5>
+						<p class="text-slate-600 mb-2 text-sm">{{ item.content|slice(0,100) }}...</p>
+						<div class="flex justify-between">
+							<p class="text-slate-600 mb-2">
+								<img src="{{ item.category.icon }}" alt="{{ item.category.title }}" class="inline-block h-7 w-7 mr-2">
+							</p>
+							<a href="{{ path('app_show', {'slug': item.slug}) }}" class="bg-violet-100 rounded-md py-2 px-3 text-sm hover:bg-violet-200 self-end w-fit transition-all duration-200 ease-in-out">
+								check it
+							</a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
 	</section>
-
 {% endblock %}

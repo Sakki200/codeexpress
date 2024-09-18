@@ -7,6 +7,7 @@ use App\Form\NoteType;
 use App\Repository\NoteRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class NoteController extends AbstractController
 {
     #[Route('/', name: 'app_note_all', methods: ['GET'])]
-    public function all(NoteRepository $nr): Response
+    public function all(NoteRepository $nr, PaginatorInterface $paginator, Request $request): Response
     {
-
-        $lastNotes = $nr->findBy(['is_public' => true], ['created_at' => 'DESC']);
+        $pagination = $paginator->paginate(
+            $nr->findBy(['is_public' => true], ['created_at' => 'DESC']), /* la requête */
+            $request->query->getInt('page', 1), /*page en cours*/
+            10 /*élements par page*/
+        );
         return $this->render('note/all.html.twig', [
-            'lastNotes' => $lastNotes
+            'allNotes' => $pagination
         ]);
     }
     #[Route('/n/{slug}', name: 'app_show', methods: ['GET'])]
@@ -78,7 +82,7 @@ class NoteController extends AbstractController
                 ->setContent($form->get('content')->getData())
                 ->setPublic($form->get('is_public')->getData())
                 ->setCategory($form->get('category')->getData())
-                ->setAuthor($form->get('author')->getData())
+                ->setAuthor($this->getUser())
             ;
             $em->persist($note);
             $em->flush();

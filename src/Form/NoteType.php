@@ -43,11 +43,11 @@ class NoteType extends AbstractType
                 'mapped' => false,
                 'required' => false,
             ])
-            ->add('author', EntityType::class, [
-                //'id' = User.id comme 'username' = User.username
-                'class' => User::class,
-                'choice_label' => 'username',
-            ])
+            // ->add('author', EntityType::class, [
+            //     //'id' = User.id comme 'username' = User.username
+            //     'class' => User::class,
+            //     'choice_label' => 'username',
+            // ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'title',

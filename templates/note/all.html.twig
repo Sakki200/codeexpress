@@ -4,20 +4,16 @@
 {% endblock %}
 
 {% block body %}
-	<h1>All public notes</h1>
-	{% for item in lastNotes %}
-		<div class="shadow-lg rounded-md p-4 md:p-6 mb-4 flex flex-col border">
-			<h5 class="mb-1">{{ item.title|slice(0,40) }}...</h5>
-			<p class="text-slate-600 mb-2 text-sm">{{ item.content|slice(0,100) }}...</p>
-			<div class="flex justify-between">
-				<p class="text-slate-600 mb-2">
-					<img src="{{ item.category.icon }}" alt="{{ item.category.title }}" class="inline-block h-7 w-7 mr-2">
-				</p>
-				<a href="{{ path('app_show', {'slug': item.slug}) }}" class="bg-violet-100 rounded-md py-2 px-3 text-sm hover:bg-violet-200 self-end w-fit transition-all duration-200 ease-in-out">
-					check it
-				</a>
-			</div>
+	<header class="bg-gradient-to-r from-violet-100 via-slate-100 to-indigo-100 py-5 md:py-16">
+		<div class="px-4 sm:max-w-screen-sm md:max-w-screen-lg mx-auto">
+			<h1 class="text-4xl md:text-5xl font-bold">Discover all public notes</h1>
+			<p class="mb-4">Find out what's new on CodeXpress</p>
 		</div>
-	{% endfor %}
-
+	</header>
+	<main class="max-w-screen-lg mx-auto py-5 md:py-16 px-4">
+		{{ include('components/notes-list.html.twig') }}
+	</main>
+	<div class="px-4 pb-6 md:pb-16 text-center">
+		{{ knp_pagination_render(allNotes) }}
+	</div>
 {% endblock %}
