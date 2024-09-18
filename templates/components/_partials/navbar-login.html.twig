@@ -1,0 +1,15 @@
+{# WHEN USER IS LOG #}
+<a href="{{path('app_note_all')}}" data-tooltip="All notes" class="border-2  border-neutral-700 p-1 rounded-md  hover:bg-neutral-200">
+	{{ux_icon('mdi:note-outline',{'class':'h-6 w-6'})}}
+</a>
+<a href="{{path('app_note_new')}}" data-tooltip="New note" class="border-2  border-neutral-700 p-1 rounded-md hover:bg-neutral-200">
+	{{ux_icon('mdi:plus-box-outline',{'class':'h-6 w-6'})}}
+</a>
+{# <a href="{{path('app_profile')}}" class="border-2  border-neutral-700 p-1 rounded-md">
+{{ux_icon('mdi:cog-outline',{'class':'h-6 w-6'})}}</a> #}
+<a href="{{path('app_logout')}}" data-tooltip="Logout" class="border-2  border-neutral-700 p-1 rounded-md  hover:bg-neutral-200">
+	{{ux_icon('mdi:logout',{'class':'h-6 w-6'})}}
+</a>
+<a href="{{path('app_profile',{'username':app.user.username ?? ''})}}" data-tooltip="Profile page" class="p-2 rounded-full ">
+	<img src="{{ '/images/uploads/' ~ app.user.image ?? 'default.png' }}" alt="profile picture" width="32">
+</a>

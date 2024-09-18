@@ -6,7 +6,8 @@
 {% block body %}
 	<header class="py-5 md:py-16 bg-gradient-to-r from-violet-100 via-slate-100 to-indigo-100 mb-16">
 		<div class="px-4 sm:max-w-screen-sm md:max-w-screen-lg mx-auto text-center">
-			<h1 class="text-4xl md:text-5xl mb-4 font-bold">Your profile</h1>
+			<h1 class="text-4xl md:text-5xl mb-2 font-bold">Your profile</h1>
+			<a href="{{path('app_profile_edit')}}" class="text-lg md:text-lg mb-4 font-semibold block hover:brightness-150">Edit your profile</a>
 			<img src="{{ '/images/uploads/' ~ app.user.image ?? app.user.image }}" width="150" class="inline-block shadow-md rounded-full">
 		</div>
 	</header>

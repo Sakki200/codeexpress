@@ -1,0 +1,8 @@
+<form action="{{path('app_search')}}" method="get" class="md:flex items-center border-2 border-neutral-400 rounded-md p-1 hidden">
+	<input type="hidden" name="csrf_token" value="{{ csrf_token('authenticate') }}">
+	<input type="text" name="q" id="q" placeholder="Search note" class="border-none bg-transparent outline-none ">
+	<button type="submit">{{ux_icon('mdi:search',{'class':'h-6 w-6 text-neutral-600 hover:text-violet-600'})}}</button>
+</form>
+<a href="{{path('app_search')}}" class="border-2  border-neutral-700 p-1 rounded-md hover:bg-neutral-200 md:hidden">
+	{{ux_icon('mdi:search',{'class':'h-6 w-6'})}}
+</a>
