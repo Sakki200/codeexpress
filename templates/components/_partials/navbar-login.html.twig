@@ -1,12 +1,20 @@
 {# WHEN USER IS LOG #}
+{% if app.user.is_premium == true %}
+	<a href="{{path('app_subscription')}}" class="bg-yellow-500 text-white py-1.5 px-3 rounded-md hover:bg-yellow-400">
+		{{ux_icon('mdi:crown',{'class':'h-6 w-6 inline'})}}
+	</a>
+{% else %}
+	<a href="{{path('app_subscription')}}" class="bg-yellow-500 text-white py-1.5 px-3 rounded-md hover:bg-yellow-400">PREMIUM
+		{{ux_icon('mdi:crown',{'class':'h-6 w-6 inline'})}}
+	</a>
+{% endif %}
+
 <a href="{{path('app_note_all')}}" data-tooltip="All notes" class="border-2  border-neutral-700 p-1 rounded-md  hover:bg-neutral-200">
 	{{ux_icon('mdi:note-outline',{'class':'h-6 w-6'})}}
 </a>
 <a href="{{path('app_note_new')}}" data-tooltip="New note" class="border-2  border-neutral-700 p-1 rounded-md hover:bg-neutral-200">
 	{{ux_icon('mdi:plus-box-outline',{'class':'h-6 w-6'})}}
 </a>
-{# <a href="{{path('app_profile')}}" class="border-2  border-neutral-700 p-1 rounded-md">
-{{ux_icon('mdi:cog-outline',{'class':'h-6 w-6'})}}</a> #}
 <a href="{{path('app_logout')}}" data-tooltip="Logout" class="border-2  border-neutral-700 p-1 rounded-md  hover:bg-neutral-200">
 	{{ux_icon('mdi:logout',{'class':'h-6 w-6'})}}
 </a>

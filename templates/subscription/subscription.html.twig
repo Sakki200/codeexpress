@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subscription
+{% endblock %}
+
+{% block body %}
+	{% if app.user.is_premium == true %}
+		<h1 class="text-3xl">You are already Premium !</h1>
+		<section class="">
+			<article class="flex flex-col justify-center items-center">
+				<h2>Premium</h2>
+				<h3>{{}}</h3>
+				<form action="{{path('app_subscription_unpremium')}}" method="POST">
+					<button>UNSUBSCRIBE</button>
+				</form>
+			</article>
+		</section>
+	{% else %}
+		{% if premium is defined %}
+			<h1 class="text-3xl">Welcome to our premium service!</h1>
+			<section class="grid grid-cols-2 justify-center">
+				<article class="flex flex-col justify-center items-center">
+					<h2>Premium</h2>
+					<h3>{{premium.price}}</h3>
+					<p>{{premium.features}}</p>
+					<form action="{{path('app_subscription_premium')}}" method="POST">
+						<button>SUBSCRIBE</button>
+					</form>
+				</article>
+			</section>
+		{% else %}
+			<h1>There is no offer for now !</h1>
+		{% endif %}
+	{% endif %}
+
+{% endblock %}

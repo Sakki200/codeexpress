@@ -76,9 +76,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Subscription::class, mappedBy: 'author')]
     private Collection $subscriptions;
 
+    #[ORM\Column]
+    private ?bool $is_premium = null;
+
     public function __construct()
     {
-        $this->setImage("https://avatar.iran.liara.run/public/1");
+        $this->is_premium = false;
         $this->notes = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->networks = new ArrayCollection();
@@ -347,6 +350,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $subscription->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function is_premium(): ?bool
+    {
+        return $this->is_premium;
+    }
+
+    public function setPremium(bool $is_premium): static
+    {
+        $this->is_premium = $is_premium;
 
         return $this;
     }

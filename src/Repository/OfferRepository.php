@@ -31,13 +31,13 @@ class OfferRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Offer
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findOneByName($value): ?Offer
+   {
+       return $this->createQueryBuilder('o')
+           ->andWhere('o.name = :name')
+           ->setParameter('name', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }
