@@ -24,7 +24,13 @@
 		{% else %}
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 				{% for item in app.user.notes %}
-					<div class="shadow-lg rounded-md p-4 md:p-6 mb-4 flex flex-col border">
+					<div
+						class="shadow-lg rounded-md p-4 md:p-6 mb-4 flex flex-col border">
+						{# TODO : BANDEAU #}
+						{% if item.isPublic == false %}
+							<div class="absolute bottom-0 left-0 bg-yellow-100 rounded-bl-md rounded-tr-md py-2 px-2 text-sm gap-2">
+								{{ux_icon('mdi:lock-open-outline', {'class': 'h-4 w-4'})}}</div>
+						{% endif %}
 						<h5 class="mb-1">{{ item.title|slice(0,40) }}...</h5>
 						<p class="text-slate-600 mb-2 text-sm">{{ item.content|slice(0,100) }}...</p>
 						<div class="flex justify-between">

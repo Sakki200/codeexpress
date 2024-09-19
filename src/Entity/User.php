@@ -70,12 +70,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $Image = null;
 
+    /**
+     * @var Collection<int, Subscription>
+     */
+    #[ORM\OneToMany(targetEntity: Subscription::class, mappedBy: 'author')]
+    private Collection $subscriptions;
+
     public function __construct()
     {
         $this->setImage("https://avatar.iran.liara.run/public/1");
         $this->notes = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->networks = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
@@ -310,6 +317,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImage(string $Image): static
     {
         $this->Image = $Image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Subscription>
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
+
+    public function addSubscription(Subscription $subscription): static
+    {
+        if (!$this->subscriptions->contains($subscription)) {
+            $this->subscriptions->add($subscription);
+            $subscription->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscription $subscription): static
+    {
+        if ($this->subscriptions->removeElement($subscription)) {
+            // set the owning side to null (unless already changed)
+            if ($subscription->getAuthor() === $this) {
+                $subscription->setAuthor(null);
+            }
+        }
 
         return $this;
     }

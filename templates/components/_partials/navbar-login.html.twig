@@ -11,5 +11,5 @@
 	{{ux_icon('mdi:logout',{'class':'h-6 w-6'})}}
 </a>
 <a href="{{path('app_profile',{'username':app.user.username ?? ''})}}" data-tooltip="Profile page" class="p-2 rounded-full ">
-	<img src="{{ '/images/uploads/' ~ app.user.image ?? 'default.png' }}" alt="profile picture" width="32">
+	<img src="{{ '/images/uploads/' ~ app.user.image ?? 'default.png' }}" alt="profile picture" width="32" class="w-11 h-11 bg-cover bg-center shadow-md rounded-full hover:scale-95 transition-transform duration-200 ease-in-out" style="background-image: url('{{ '/images/uploads/' ~ app.user.image ?? 'default.jpg' }}')">
 </a>

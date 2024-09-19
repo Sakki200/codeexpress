@@ -9,6 +9,8 @@ use App\Entity\Category;
 use App\Entity\Like;
 use App\Entity\Network;
 use App\Entity\Note;
+use App\Entity\Offer;
+use App\Entity\Subscription;
 use App\Entity\User;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -60,6 +62,16 @@ class AppFixtures extends Fixture
         $noteArray = []; // Ce tableau nous servira pur conserver les objects Note
         $userArray = []; // Ce tableau nous servira pur conserver les objects User
 
+        //Pour l'offre premium
+        $premiumOffer = new Offer;
+        $premiumOffer
+            ->setName('premium')
+            ->setPrice(4.99)
+            ->setFeatures('Premium offer advantage : - You can use a gif avatar - And many more !')
+        ;
+        $manager->persist($premiumOffer);
+
+
         foreach ($categories as $title => $icon) {
             $category = new Category();  // NOUVEL OBJET CATEGORY
             $category->setTitle($title); // AJOUT DU TITRE
@@ -83,6 +95,19 @@ class AppFixtures extends Fixture
             array_push($userArray, $user);
             $manager->persist($user);
 
+            //Subscription
+            if ($faker->boolean(40) === true) {
+                $subscription = new Subscription();
+                $subscription
+                    ->setAuthor($user)
+                    ->setOffer($premiumOffer)
+                    ->setStartDate($faker->dateTimeThisYear())
+                    ->setEndDate($faker->dateTimeThisYear('+1 months'));
+
+                $manager->persist($subscription);
+            }
+
+            //Note
             for ($j = 0; $j < 3; $j++) {
 
                 $note = new Note();
@@ -98,7 +123,7 @@ class AppFixtures extends Fixture
                 array_push($noteArray, $note);
                 $manager->persist($note);
             }
-
+            //Network
             for ($k = 0; $k < 3; $k++) {
                 $network = new Network();
                 $randomKey = array_rand($networkArray);
@@ -110,6 +135,7 @@ class AppFixtures extends Fixture
 
                 $manager->persist($network);
             }
+            //Likes
             for ($l = 0; $l < 500; $l++) {
                 $like = new Like();
                 $like

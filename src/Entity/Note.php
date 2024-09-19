@@ -61,7 +61,6 @@ class Note
     public function __construct()
     {
         $this->title = uniqid('note-'); //GUID of title initialization
-
         $this->is_public = false; //boolean initialization 
         $this->notifications = new ArrayCollection();
         $this->likes = new ArrayCollection();
