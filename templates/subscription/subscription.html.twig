@@ -5,26 +5,26 @@
 
 {% block body %}
 	{% if app.user.is_premium == true %}
-		<h1 class="text-3xl">You are already Premium !</h1>
+		<h1 class="text-4xl font-semibold text-center mt-12 mb-8">You are already Premium !</h1>
 		<section class="">
 			<article class="flex flex-col justify-center items-center">
 				<h2>Premium</h2>
-				<h3>{{}}</h3>
+				<h3></h3>
 				<form action="{{path('app_subscription_unpremium')}}" method="POST">
-					<button>UNSUBSCRIBE</button>
+					<button class="mb-12 bg-red-600 text-white rounded-md px-4 py-2 font-semibold hover:scale-105 hover:bg-red-500 transition-transform duration-200 ease-in-out">UNSUBSCRIBE</button>
 				</form>
 			</article>
 		</section>
 	{% else %}
 		{% if premium is defined %}
-			<h1 class="text-3xl">Welcome to our premium service!</h1>
-			<section class="grid grid-cols-2 justify-center">
+			<h1 class="text-4xl font-semibold text-center mt-12 mb-8">Welcome to our premium service!</h1>
+			<section class="flex justify-center">
 				<article class="flex flex-col justify-center items-center">
-					<h2>Premium</h2>
-					<h3>{{premium.price}}</h3>
-					<p>{{premium.features}}</p>
+					<h2 class="text-5xl font-semibold text-yellow-500">Premium</h2>
+					<h3 class="text-2xl font-semibold my-4">{{premium.price}}</h3>
+					<p class="mb-4 text-center">{{premium.features|replace({'-': '<br>'})|raw}}</p>
 					<form action="{{path('app_subscription_premium')}}" method="POST">
-						<button>SUBSCRIBE</button>
+						<button class="mb-12 text-3xl bg-yellow-500 text-white rounded-md px-4 py-2 font-semibold hover:scale-105 hover:bg-yellow-400 transition-transform duration-200 ease-in-out">SUBSCRIBE</button>
 					</form>
 				</article>
 			</section>

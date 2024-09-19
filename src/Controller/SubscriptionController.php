@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Subscription;
-use App\Entity\User;
 use App\Repository\OfferRepository;
 use App\Repository\SubscriptionRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,5 +41,25 @@ class SubscriptionController extends AbstractController
 
         return $this->redirectToRoute('app_profile');
     }
+    #[Route('/s/unpremium', name: 'app_subscription_unpremium', methods: ['GET', 'POST'])]
+    public function unsubscriptionToPremium(EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
 
+        $subscriptions = $em->getRepository(Subscription::class)->findBy([
+            'author' => $user,
+            'offer' => 3
+        ]);
+
+        if ($subscriptions) {
+            foreach ($subscriptions as $sb) {
+                $em->remove($sb);
+                $user->setPremium(false);
+                $em->flush();
+            }
+        }
+
+
+        return $this->redirectToRoute('app_profile');
+    }
 }

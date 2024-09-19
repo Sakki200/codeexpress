@@ -30,7 +30,7 @@
 		<aside class="flex flex-col gap-4 md:col-span-1">
 			<div class="rounded-md p-4 mb-4 flex flex-col gap-4 border">
 				<div class="flex items-center gap-2">
-					<img src="{{ note.author.image ?? 'https://avatar.iran.liara.run/public/50' }}" alt="{{ note.author.username }}" class="inline-block h-10 w-10 rounded-full">
+					<img src="{{ '/images/uploads/' ~ app.user.image ?? app.user.image }}" alt="profile picture" class="inline-block h-10 w-10 rounded-full">
 					<div class="flex flex-col gap-1">
 						<p class="text-xl font-bold">{{ note.author.username }}</p>
 						<p class="text-sm text-slate-600">Member since
