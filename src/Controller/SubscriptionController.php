@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Subscription;
 use App\Repository\OfferRepository;
 use App\Repository\SubscriptionRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

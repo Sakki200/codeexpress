@@ -111,25 +111,25 @@ class AppFixtures extends Fixture
             for ($j = 0; $j < 3; $j++) {
 
                 $note = new Note();
-                $view = new View();
                 $note
                     ->setTitle($faker->sentence())
                     ->setSlug($this->slug->slug($note->getTitle()))
                     ->setContent($faker->randomHtml())
                     ->setPublic($faker->boolean(50))
-                    // ->setViews($faker->numberBetween(100, 10000))
                     ->setAuthor($user)
                     ->setCategory($faker->randomElement($categoryArray));
 
                 array_push($noteArray, $note);
                 $manager->persist($note);
 
-                for ($l = 0; $l < $faker->numberBetween(100, 500); $l++) {
+                for ($v = 0; $v < rand(100, 500); $v++) {
+                    $view = new View();
                     $view
                         ->setNote($note)
                         ->setIpAdress($faker->ipv4());
 
                     $manager->persist($view);
+                    $manager->flush($view);
                 }
             }
             //Network
@@ -145,7 +145,7 @@ class AppFixtures extends Fixture
                 $manager->persist($network);
             }
             //Likes
-            for ($l = 0; $l < 500; $l++) {
+            for ($l = 0; $l < 1000; $l++) {
                 $like = new Like();
                 $like
                     ->setAuthor($faker->randomElement($userArray))
