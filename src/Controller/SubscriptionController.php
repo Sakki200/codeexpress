@@ -41,13 +41,14 @@ class SubscriptionController extends AbstractController
         return $this->redirectToRoute('app_profile');
     }
     #[Route('/s/unpremium', name: 'app_subscription_unpremium', methods: ['GET', 'POST'])]
-    public function unsubscriptionToPremium(EntityManagerInterface $em): Response
+    public function unsubscriptionToPremium(OfferRepository $ofr, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
+        $ofr = $ofr->findOneByName('premium');
 
         $subscriptions = $em->getRepository(Subscription::class)->findBy([
             'author' => $user,
-            'offer' => 1
+            'offer' => $ofr
         ]);
 
         if ($subscriptions) {
