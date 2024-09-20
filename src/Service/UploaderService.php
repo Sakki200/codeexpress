@@ -28,6 +28,9 @@ class UploaderService
 
     public function deleteImage(string $fileName): void
     {
+        if ($fileName === 'default.jpg') {
+            return;
+        }
         try {
             $filePath = $this->param->get('uploads_images_directory') . '/' . $fileName;
             if (file_exists($filePath)) {

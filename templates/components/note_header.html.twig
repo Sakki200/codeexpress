@@ -13,7 +13,7 @@
 		</ul>
 		<h1 class="text-4xl md:text-5xl font-bold">{{ note.title }}</h1>
 		<div class="flex gap-2 items-center text-sm">
-			<img src="{{ '/images/uploads/' ~ app.user.image ?? "defaut.jpg" }}" alt="profile picture" class="inline-block h-7 w-7 mr-2">
+			<img src="{{ '/images/uploads/' ~ app.user.image ?? "default.jpg" }}" alt="profile picture" class="inline-block h-7 w-7 mr-2">
 			<p class="text-slate-600">published
 				{{ note.createdAt|time_diff }}
 				ago by

@@ -90,8 +90,7 @@ class AppFixtures extends Fixture
                 ->setEmail($emailUsername . '@' . $faker->freeEmailDomain()) // freeEmailDomain() créer un nom de domain de mail e.g "gmail.com"
                 ->setUsername($username)
                 ->setPassword($this->hash->hashPassword($user, 'admin')) // HASH le mdp "admin"
-                ->setRoles(['ROLE_USER'])
-                ->setImage("https://avatar.iran.liara.run/public/" . $faker->randomNumber(2, true));
+                ->setRoles(['ROLE_USER']);
 
             array_push($userArray, $user);
             $manager->persist($user);

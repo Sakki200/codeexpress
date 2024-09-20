@@ -47,7 +47,7 @@ class SubscriptionController extends AbstractController
 
         $subscriptions = $em->getRepository(Subscription::class)->findBy([
             'author' => $user,
-            'offer' => 3
+            'offer' => 1
         ]);
 
         if ($subscriptions) {

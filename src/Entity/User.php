@@ -81,6 +81,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+
+        $this->Image = "default.jpg";
         $this->is_premium = false;
         $this->notes = new ArrayCollection();
         $this->likes = new ArrayCollection();
