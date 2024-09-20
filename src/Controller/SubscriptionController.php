@@ -27,7 +27,7 @@ class SubscriptionController extends AbstractController
         $currentDate = new \DateTime();
 
         $user = $this->getUser();
-        $user->setPremium(true);
+        $user->setRoles(['ROLE_PREMIUM']);
 
         $sb = new Subscription;
         $sb
@@ -55,7 +55,7 @@ class SubscriptionController extends AbstractController
         if ($subscriptions) {
             foreach ($subscriptions as $sb) {
                 $em->remove($sb);
-                $user->setPremium(false);
+                $user->removeRole(['ROLE_PREMIUM']);
                 $em->flush();
             }
         }

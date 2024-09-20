@@ -8,7 +8,7 @@
 		<div class="px-4 sm:max-w-screen-sm md:max-w-screen-lg mx-auto text-center">
 			<h1 class="text-4xl md:text-5xl mb-2 font-bold">Your profile</h1>
 			<a href="{{path('app_profile_edit')}}" class="text-lg md:text-lg mb-4 font-semibold block hover:brightness-150">Edit your profile</a>
-			{% if app.user.is_premium %}
+			{% if app.user and 'ROLE_PREMIUM' in app.user.roles %}
 				<a href="{{path('app_subscription')}}" class="  flex justify-center">
 					{{ux_icon('mdi:crown',{'class':'h-12 w-12 text-yellow-500 text-center hover:scale-110 transition-transform duration-200 ease-in-out'})}}
 				</a>

@@ -1,5 +1,5 @@
 {# WHEN USER IS LOG #}
-{% if app.user.is_premium == true %}
+{% if app.user and 'ROLE_PREMIUM' in app.user.roles %}
 	<a href="{{path('app_subscription')}}" class="bg-yellow-500 text-white py-1.5 px-3 rounded-md hover:bg-yellow-400">
 		{{ux_icon('mdi:crown',{'class':'h-6 w-6 inline'})}}
 	</a>

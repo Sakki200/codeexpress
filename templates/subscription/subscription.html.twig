@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	{% if app.user.is_premium == true %}
+	{% if app.user and 'ROLE_PREMIUM' in app.user.roles %}
 		<h1 class="text-4xl font-semibold text-center mt-12 mb-8">You are already Premium !</h1>
 		<section class="">
 			<article class="flex flex-col justify-center items-center">

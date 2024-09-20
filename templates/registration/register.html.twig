@@ -1,24 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}
+    Create an account
+{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+	<main class="min-h-96 flex flex-col items-center justify-center bg-gradient-to-r from-violet-100 via-slate-100 to-indigo-100 py-5 md:py-16">
+		{% for flash_error in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
+        <header class="text-center mb-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Create your account</h1>
+            <p class="text-slate-600 mb-4">
+                Sign up to start creating your own notes and discovering new ones.
+            </p>
+        </header>
 
-    <h1>Register</h1>
+		<div class="my-10 p-4 rounded-md shadow-md bg-slate-50 w-80">
+			{{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+			{{ form_start(registrationForm) }}
+			{{ form_row(registrationForm.username, {
+                attr: {
+                    class: 'border-2 border-violet-950 rounded-md p-2 w-full focus:border-violet-600 mb-2'
+                }
+            }) }}
+			{{ form_row(registrationForm.email, {
+                attr: {
+                    class: 'border-2 border-violet-950 rounded-md p-2 w-full focus:border-violet-600 mb-2'
+                }
+            }) }}
+			{{ form_row(registrationForm.plainPassword, {
+                attr: {
+                    class: 'border-2 border-violet-950 rounded-md p-2 w-full focus:border-violet-600 mb-2'
+                }
+            }) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+			<button type="submit" class="bg-violet-600 p-2 flex items-center gap-2 rounded-md mt-4 w-full justify-center text-white">
+                {{ ux_icon('mdi:account-plus', { 'class': 'h-6 w-6' }) }}
+                Create my account
+            </button>
+			{{ form_end(registrationForm) }}
+		</div>
+		<p class="text-center text-slate-600 mb-4 text-sm pb-48">Already have an account?
+			<a href="{{ path('app_login') }}" class="text-violet-600">Sign in</a>
+		</p>
+	</main>
 {% endblock %}

@@ -1,6 +1,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     {% for item in allNotes %}
         <div class="shadow-lg rounded-md p-4 md:p-6 mb-4 flex flex-col border relative">
+        {{ dump(item.isPremium) }}
             {% if item.isPremium %}
                 <div class="absolute bottom-0 left-0 bg-yellow-100 rounded-bl-md rounded-tr-md py-1 px-2 text-sm flex items-center gap-2">
                     {{ ux_icon('mdi:star-outline', { 'class': 'h-4 w-4' }) }} Premium

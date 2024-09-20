@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Homepage
+    Homepage
 {% endblock %}
 
 {% block body %}
@@ -16,32 +16,36 @@
 			{{ ux_icon('mdi:calendar', { 'class': 'h-5 w-5 text-violet-950 mr-1 inline-block' }) }}
 			Recent notes
 		</h3>
-		<p class="mb-4">There are curently
-			{{ totalNotes }}
-			notes shared on CodeXpress</p>
-		<section class="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+		<p class="mb-4">There are curently {{ totalNotes }} notes shared on CodeXpress</p>
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 			{% for item in lastNotes %}
-				<article class="shadow-lg rounded-md p-4 md:p-6 mb-4 flex flex-col border">
-					<a href="{{ path('app_show', {'slug': item.slug}) }}">
-						<h5 class="mb-1">{{ item.title|slice(0,40) }}...</h5>
-						<p class="text-slate-600 mb-2 text-sm">{{ item.content|slice(0,100) }}...</p>
-						<div class="flex justify-between">
-							<p class="text-slate-600 mb-2">
-								<img src="{{ item.category.icon }}" alt="{{ item.category.title }}" class="inline-block h-7 w-7 mr-2">
-							</p>
-							<a href="{{ path('app_show', {'slug': item.slug}) }}" class="bg-violet-100 rounded-md py-2 px-3 text-sm hover:bg-violet-200 self-end w-fit transition-all duration-200 ease-in-out">
-								check it
-							</a>
+				<div class="shadow-lg rounded-md p-4 md:p-6 mb-4 flex flex-col border relative">
+				<a href="{{ path('app_show', {'slug': item.slug}) }}"> 
+					{% if item.isPremium %}
+						<div class="absolute bottom-0 left-0 bg-yellow-100 rounded-bl-md rounded-tr-md py-1 px-2 text-sm flex items-center gap-2">
+							{{ ux_icon('mdi:star-outline', { 'class': 'h-4 w-4' }) }} Premium
 						</div>
-					</a>
-				</article>
+					{% endif %}
+					<h5 class="mb-1">{{ item.title|slice(0,40) }}...</h5>
+					<p class="text-slate-600 mb-2 text-sm">{{ item.content|slice(0,100) }}...</p>
+					<div class="flex justify-between">
+						<p class="text-slate-600 mb-2">
+							<img src="{{ item.category.icon }}" alt="{{ item.category.title }}" class="inline-block h-7 w-7 mr-2">
+						</p>
+						<a href="{{ path('app_show', {'slug': item.slug}) }}" class="bg-violet-100 rounded-md py-2 px-3 text-sm hover:bg-violet-200 self-end w-fit transition-all duration-200 ease-in-out">
+							check it
+						</a></a>
+					</div>
+				</div>
 			{% endfor %}
-		</section>
-		<a href="{{ path('app_note_all')}}" class="flex justify-center">
-			<button class="bg-violet-100 hover:bg-violet-200 rounded-md m-auto pl-4 pr-4 pt-2 pb-2 mt-4">
-				<h3 class="font-semibold text-2xl  hover:text-violet-700 rounded-md">ALL NOTES</h3>
-			</button>
-		</a>
+		</div>
+		<div class="flex justify-center mt-4 mb-8">
+			<a href="{{ path('app_note_all') }}" class="bg-violet-100 rounded-md py-2 px-3 hover:bg-violet-200 w-fit transition-all duration-200 ease-in-out flex items-center gap-2">
+				{{ ux_icon('mdi:archive-outline', { 'class': 'h-5 w-5 text-violet-950' }) }}
+				See all notes
+			</a>
+		</div>
 		{% include 'components/cta.html.twig' %}
 	</main>
+
 {% endblock %}

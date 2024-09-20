@@ -129,7 +129,6 @@ class AppFixtures extends Fixture
                         ->setIpAdress($faker->ipv4());
 
                     $manager->persist($view);
-                    $manager->flush($view);
                 }
             }
             //Network
@@ -145,7 +144,7 @@ class AppFixtures extends Fixture
                 $manager->persist($network);
             }
             //Likes
-            for ($l = 0; $l < 1000; $l++) {
+            for ($l = 0; $l < 5000; $l++) {
                 $like = new Like();
                 $like
                     ->setAuthor($faker->randomElement($userArray))

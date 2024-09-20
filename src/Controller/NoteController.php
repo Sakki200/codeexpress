@@ -35,18 +35,21 @@ class NoteController extends AbstractController
     #[Route('/n/{slug}', name: 'app_show', methods: ['GET'])]
     public function show(NoteRepository $nr, Request $request, EntityManagerInterface $em, string $slug): Response
     {
-        $note = new Note();
+        $note = $nr->findOneBySlug($slug);
+
+        if (!$note) {
+            throw $this->createNotFoundException('La note n\'existe pas');
+        }
+
         $vw = new View();
         $vw
-            ->setNote($nr->findOneBySlug($slug))
+            ->setNote($note)
             ->setIpAdress($request->getClientIp());
         $em->persist($vw);
         $em->flush();
 
-        $thisNote = $nr->findOneBySlug($slug);
-        $author = $thisNote->getAuthor();
-        $authorNotes = $author->getNotes();
-        // $authorNotes = $author->findOneByNote(['is_public' => true], ['created_at' => 'DESC'], 3);
+        $author = $note->getAuthor();
+        $authorNotes = $nr->findBy(['author' => $author, 'is_public' => true], ['created_at' => 'DESC'], 3);
 
         if ($this->getUser() !== $note->getAuthor()) {
             $canBeModify = true;
