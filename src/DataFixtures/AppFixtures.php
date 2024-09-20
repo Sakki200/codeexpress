@@ -12,6 +12,7 @@ use App\Entity\Note;
 use App\Entity\Offer;
 use App\Entity\Subscription;
 use App\Entity\User;
+use App\Entity\View;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -111,17 +112,26 @@ class AppFixtures extends Fixture
             for ($j = 0; $j < 3; $j++) {
 
                 $note = new Note();
+                $view = new View();
                 $note
                     ->setTitle($faker->sentence())
                     ->setSlug($this->slug->slug($note->getTitle()))
                     ->setContent($faker->randomHtml())
                     ->setPublic($faker->boolean(50))
-                    ->setViews($faker->numberBetween(100, 10000))
+                    // ->setViews($faker->numberBetween(100, 10000))
                     ->setAuthor($user)
                     ->setCategory($faker->randomElement($categoryArray));
 
                 array_push($noteArray, $note);
                 $manager->persist($note);
+
+                for ($l = 0; $l < $faker->numberBetween(100, 500); $l++) {
+                    $view
+                        ->setNote($note)
+                        ->setIpAdress($faker->ipv4());
+
+                    $manager->persist($view);
+                }
             }
             //Network
             for ($k = 0; $k < 3; $k++) {

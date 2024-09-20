@@ -29,9 +29,6 @@ class Note
     #[ORM\Column]
     private ?bool $is_public = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?int $views = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
@@ -58,13 +55,19 @@ class Note
     #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Category $category = null;
 
+    /**
+     * @var Collection<int, View>
+     */
+    #[ORM\OneToMany(targetEntity: View::class, mappedBy: 'note')]
+    private Collection $views;
+
     public function __construct()
     {
         $this->title = uniqid('note-'); //GUID of title initialization
         $this->is_public = false; //boolean initialization 
         $this->notifications = new ArrayCollection();
         $this->likes = new ArrayCollection();
-        $this->views = 0;
+        $this->views = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -128,18 +131,6 @@ class Note
     public function setPublic(bool $is_public): static
     {
         $this->is_public = $is_public;
-
-        return $this;
-    }
-
-    public function getViews(): ?string
-    {
-        return $this->views;
-    }
-
-    public function setViews(string $views): static
-    {
-        $this->views = $views;
 
         return $this;
     }
@@ -249,6 +240,36 @@ class Note
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, View>
+     */
+    public function getViews(): Collection
+    {
+        return $this->views;
+    }
+
+    public function addView(View $view): static
+    {
+        if (!$this->views->contains($view)) {
+            $this->views->add($view);
+            $view->setNote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeView(View $view): static
+    {
+        if ($this->views->removeElement($view)) {
+            // set the owning side to null (unless already changed)
+            if ($view->getNote() === $this) {
+                $view->setNote(null);
+            }
+        }
 
         return $this;
     }

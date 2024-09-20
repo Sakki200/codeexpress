@@ -27,7 +27,6 @@ class SubscriptionController extends AbstractController
 
         $user = $this->getUser();
         $user->setPremium(true);
-        $em->flush();
 
         $sb = new Subscription;
         $sb
@@ -58,7 +57,6 @@ class SubscriptionController extends AbstractController
                 $em->flush();
             }
         }
-
 
         return $this->redirectToRoute('app_profile');
     }

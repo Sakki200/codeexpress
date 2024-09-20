@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Note;
+use App\Entity\View;
 use App\Form\NoteType;
 use App\Repository\NoteRepository;
 use App\Repository\UserRepository;
+use App\Repository\ViewRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,9 +33,16 @@ class NoteController extends AbstractController
         ]);
     }
     #[Route('/n/{slug}', name: 'app_show', methods: ['GET'])]
-    public function show(NoteRepository $nr, string $slug): Response
+    public function show(NoteRepository $nr, Request $request, EntityManagerInterface $em, string $slug): Response
     {
         $note = new Note();
+        $vw = new View();
+        $vw
+            ->setNote($nr->findOneBySlug($slug))
+            ->setIpAdress($request->getClientIp());
+        $em->persist($vw);
+        $em->flush();
+
         $thisNote = $nr->findOneBySlug($slug);
         $author = $thisNote->getAuthor();
         $authorNotes = $author->getNotes();
