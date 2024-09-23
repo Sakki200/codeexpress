@@ -70,7 +70,7 @@ class NoteController extends AbstractController
         $author = $user->findOneByUsername($username); // Recherche de l'utilisateur
         return $this->render('note/user_note.html.twig', [
             'author' => $author,
-            'userNotes' => $user->getNotes($author) // Récupération des notes de l'utilisateur
+            'userNotes' => $author->getNotes() // Récupération des notes de l'utilisateur
 
         ]);
     }
