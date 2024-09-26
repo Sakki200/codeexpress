@@ -1,4 +1,15 @@
+root_redirect:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    defaults:
+        route: app_home
+        permanent: true
+        _locale: en
+
 controllers:
+    prefix : /{_locale}/
+    requirements : 
+        _locale : en|fr
     resource:
         path: ../src/Controller/
         namespace: App\Controller

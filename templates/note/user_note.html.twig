@@ -9,6 +9,6 @@
 
 	{% for note in userNotes %}
 		{{dump(note)}}
-		<a href="{{ path('app_note_show', {'slug': note.slug}) }}">Show</a>
+		<a href="{{ path('app_note_show', {'slug': note.slug}) }}">{{"Show"|trans}}</a>
 	{% endfor %}
 {% endblock %}

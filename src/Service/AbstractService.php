@@ -8,7 +8,12 @@ use Symfony\Component\Mailer\MailerInterface;
 abstract class AbstractService
 {
     public function __construct(
-        protected ParameterBagInterface $parameterBag,
+        protected ParameterBagInterface $parameter,
         protected MailerInterface $mailer
-    ) {}
+    ) {
+
+        $this->parameter = $parameter;
+        $this->mailer = $mailer;
+
+    }
 }

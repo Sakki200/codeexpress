@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User profile
+{% block title %}{{"User profile"|trans}}
 {% endblock %}
 
 {% block body %}
 	<header class="py-5 md:py-16 bg-gradient-to-r from-violet-100 via-slate-100 to-indigo-100 mb-16">
 		<div class="px-4 sm:max-w-screen-sm md:max-w-screen-lg mx-auto text-center">
-			<h1 class="text-4xl md:text-5xl mb-2 font-bold">Your profile</h1>
-			<a href="{{path('app_profile_edit')}}" class="text-lg md:text-lg mb-4 font-semibold block hover:brightness-150">Edit your profile</a>
+			<h1 class="text-4xl md:text-5xl mb-2 font-bold">{{"Your profile"|trans}}</h1>
+			<a href="{{path('app_profile_edit')}}" class="text-lg md:text-lg mb-4 font-semibold block hover:brightness-150">{{"Edit your profile"|trans}}</a>
 			{% if app.user and 'ROLE_PREMIUM' in app.user.roles %}
 				<a href="{{path('app_subscription')}}" class="  flex justify-center">
 					{{ux_icon('mdi:crown',{'class':'h-12 w-12 text-yellow-500 text-center hover:scale-110 transition-transform duration-200 ease-in-out'})}}
@@ -20,10 +20,10 @@
 		{% if app.user.notes is empty %}
 			<div class="text-center">
 				<p class="text-violet-950 mb-5">
-					You haven't created any note yet
+					{{"You haven't created any note yet"|trans}}
 				</p>
 				<a href="{{ path('app_note_new') }}" class="bg-violet-100 rounded-md py-2 px-3 hover:bg-violet-200 self-end w-fit transition-all duration-200 ease-in-out">
-					Create a new note
+					{{"Create a new note"|trans}}
 				</a>
 			</div>
 		{% else %}
@@ -43,7 +43,7 @@
 								<img src="{{ item.category.icon }}" alt="{{ item.category.title }}" class="inline-block h-7 w-7 mr-2">
 							</p>
 							<a href="{{ path('app_show', {'slug': item.slug}) }}" class="bg-violet-100 rounded-md py-2 px-3 text-sm hover:bg-violet-200 self-end w-fit transition-all duration-200 ease-in-out">
-								check it
+								{{"check it"|trans}}
 							</a>
 						</div>
 					</div>

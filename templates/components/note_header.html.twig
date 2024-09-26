@@ -2,10 +2,10 @@
 	<div class="px-4 sm:max-w-screen-sm md:max-w-screen-lg mx-auto">
 		<ul class="flex gap-2 text-violet-950 mb-4 text-sm">
 			<li class="after:content-['>']">
-				<a href="{{ path('app_home') }}">Home</a>
+				<a href="{{ path('app_home') }}">{{'Home'|trans}}</a>
 			</li>
 			<li class="after:content-['>']">
-				<a href="{{ path('app_note_all') }}">All notes</a>
+				<a href="{{ path('app_note_all') }}">{{'All notes'|trans}}</a>
 			</li>
 			<li class="text-violet-600">
 				{{ note.title|slice(0,20) }}...
@@ -14,7 +14,7 @@
 		<h1 class="text-4xl md:text-5xl font-bold">{{ note.title }}</h1>
 		<div class="flex gap-2 items-center text-sm">
 			<img src="{{ '/images/uploads/' ~ app.user.image ?? "default.jpg" }}" alt="profile picture" class="inline-block h-7 w-7 mr-2">
-			<p class="text-slate-600">published
+			<p class="text-slate-600">{{'published'|trans}}
 				{{ note.createdAt|time_diff }}
 				ago by
 				{{ note.author.username }}</p>

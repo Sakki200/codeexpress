@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Toutes les notes
+{% block title %}{{"All notes"|trans}}
 {% endblock %}
 
 {% block body %}
 	<header class="bg-gradient-to-r from-violet-100 via-slate-100 to-indigo-100 py-5 md:py-16">
 		<div class="px-4 sm:max-w-screen-sm md:max-w-screen-lg mx-auto">
-			<h1 class="text-4xl md:text-5xl font-bold">Discover all public notes</h1>
-			<p class="mb-4">Find out what's new on CodeXpress</p>
+			<h1 class="text-4xl md:text-5xl font-bold">{{"Discover all public notes"|trans}}</h1>
+			<p class="mb-4">{{"Find out what's new on CodeXpress"|trans}}</p>
 		</div>
 	</header>
 	{% cache 'allNotes' ttl(3600) %}		

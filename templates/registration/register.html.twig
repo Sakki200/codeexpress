@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Create an account
+    {{"Create an account"|trans}}
 {% endblock %}
 
 {% block body %}
@@ -10,9 +10,9 @@
 			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 		{% endfor %}
         <header class="text-center mb-4">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Create your account</h1>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">{{"Create your account"|trans}}</h1>
             <p class="text-slate-600 mb-4">
-                Sign up to start creating your own notes and discovering new ones.
+                {{"Sign up to start creating your own notes and discovering new ones."|trans}}
             </p>
         </header>
 
@@ -38,12 +38,12 @@
 
 			<button type="submit" class="bg-violet-600 p-2 flex items-center gap-2 rounded-md mt-4 w-full justify-center text-white">
                 {{ ux_icon('mdi:account-plus', { 'class': 'h-6 w-6' }) }}
-                Create my account
+                {{"Create my account"|trans}}
             </button>
 			{{ form_end(registrationForm) }}
 		</div>
-		<p class="text-center text-slate-600 mb-4 text-sm pb-48">Already have an account?
-			<a href="{{ path('app_login') }}" class="text-violet-600">Sign in</a>
+		<p class="text-center text-slate-600 mb-4 text-sm pb-48">{{"Already have an account?"|trans}}
+			<a href="{{ path('app_login') }}" class="text-violet-600">{{"Sign in"|trans}}</a>
 		</p>
 	</main>
 {% endblock %}
